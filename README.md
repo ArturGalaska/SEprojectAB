@@ -3,6 +3,16 @@
 - Student ID: 6395982
 
 ## UML models and description
+Task1
+
+The main class is the AlertGenerator, which is relying on data from DataStorage and it applies a list of threshold rules (ThresholdRule) in order to evaluate the patient's records. Whenever a rule is violated, an Alert is created and passed to the alert manager(AlertManager) for dispatch, enabling real-time response. Every single threshold rule defines a measurement type like heart rate, an operator, and a threshold value. It has a method isViolated which encapsulates the comparison logic used to recognize when a health reading turns to critical. The class Alert models the result of a rule violation, storing the affected patient's ID, the triggering condition, and the time of the event. This solution makes it easy to trace each alert. Patient and PatientRecord model the source data with each patient owning multiple timestamped records. Tese records have a foundation for both historical analysis and immediate decision-making. This desigh ensures modularity, it also allows rules to be updated independently, it also supports system scalability as more and more patients or measurements are being introduced to it over time.
+[Task 1 UML](./uml_models/Task1UML.PDF)
+
+Task2
+
+The main class is DataStorage. It manages patiend data, providing methods to add new entries(addPatientData) and query historical records (getRecords). The data is being stored per each patient using a Map, enabling fast access by patient's specific ID. Every patient object holds a list of PatientRecord instances , modeling a one to many relationship. A PatientRecord encapsulates a single health measurement, with attributes such as recordtype, measurementValue, and also a timestamp for accurate tracking and historical trend analysis. The DataRetriever class interfaces with dataStorage in order to allow authorized personnel to get the patient data. The AccessPolicyManager acts as a gatekeeper, enforcing role- based access control through the method (canAccess). This enrues that users without permissions will not be able to access patients sensitive data, which is important for privacy compliance and data security. 
+[Task 2 UML](./uml_models/Task2UML.PDF)
+
 Task3 
  
 The patient identification system ensures that each incoming data point is correctly linked to existing patient record in a hospital's database. At the start of the process there is PatientIdentifier class, which performs matching patient ID with IncomingData ( which is a class that stores variables like: patient ID, record type, measurement value and timestamp).
