@@ -2,6 +2,21 @@
 - Student ID: 6392995
 - Student ID: 6395982
 
+## UML models and description
+Task3 
+ 
+The patient identification system ensures that each incoming data point is correctly linked to existing patient record in a hospital's database. At the start of the process there is PatientIdentifier class, which performs matching patient ID with IncomingData ( which is a class that stores variables like: patient ID, record type, measurement value and timestamp).
+Each patient data is stored as PatientRecord in PatientDataBase which is the storage for all of the patients. The purpose of IdentityManager is to inform a user that there is a mismatch between incoming data and existing patients in the database. It uses an error class which will throw an error if such situation occurs. IdentityManager then will handle the mismatch by (as an example) adding the patient from incoming data to the database.
+
+[Task 3 description](./uml_models/Task3UML.pdf)
+
+Task 4 
+
+The external data integration is responsible for receiving, parsing and delivering data from 
+the outside into the patient identification system. This process begins with the DataListener interface which defines a common structure for all incoming forms of data. It is implemented by 3 classes: TCPDataListener, WebSocketDataListener and FileDataListener, each used to handle different type of data. Incoming raw data( as  a String) is passed to the DataParser class, which transforms it into universal structure by using ParsedData class. Then this transfored data is passed into DataSourceAdapter, which uses it for later processing like patient identification and storage.
+
+[Task 4 description](./uml_models/Task4UML.pdf)
+
 4385
 # Cardio Data Simulator
 
