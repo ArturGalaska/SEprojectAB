@@ -52,7 +52,16 @@ public class Patient {
      *         range
      */
     public List<PatientRecord> getRecords(long startTime, long endTime) {
-        // TODO Implement and test this method
+        List<PatientRecord> patientRecords = new ArrayList<>();
+        for(PatientRecord record:this.patientRecords){
+            long timeStamp = record.getTimestamp();
+            if(timeStamp>=startTime&&record.getTimestamp()<=endTime)
+                patientRecords.add(record);
+        }
         return patientRecords;
+    }
+    public String getPatientId(){
+        String id = String.valueOf(patientId);
+        return id;
     }
 }

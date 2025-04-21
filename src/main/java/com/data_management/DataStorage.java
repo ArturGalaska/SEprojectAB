@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.alerts.AlertGenerator;
+import com.cardio_generator.generators.BloodPressureDataGenerator;
+import com.cardio_generator.outputs.FileOutputStrategy;
 
 /**
  * Manages storage and retrieval of patient data within a healthcare monitoring
@@ -86,7 +88,9 @@ public class DataStorage {
         // DataReader is not defined in this scope, should be initialized appropriately.
         // DataReader reader = new SomeDataReaderImplementation("path/to/data");
         DataStorage storage = new DataStorage();
-
+        Patient patient1 = new Patient(1);
+        storage.patientMap.put(1, patient1);
+        storage.addPatientData(1, 40, "DiastolicPressure", 1713703600000L);
         // Assuming the reader has been properly initialized and can read data into the
         // storage
         // reader.readData(storage);
