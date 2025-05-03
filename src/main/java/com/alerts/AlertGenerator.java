@@ -41,6 +41,11 @@ public class AlertGenerator {
         // Implementation goes here
         List<PatientRecord> patientData = patient.getRecords(1713700000000L, 1713707200000L);
         
+        Double latestLowSystolic = null;
+        Long systolicTimestamp = null;
+        Double latestLowOxygen = null;
+        Long oxygenTimestamp = null;
+
         for(int i =0;i<patientData.size();i++){
             PatientRecord record = patientData.get(i);
             if(record.getRecordType().equals("SystolicPressure")){
@@ -52,6 +57,10 @@ public class AlertGenerator {
                 if(systolicPressure<90){
                     Alert tooLowSystolicAlert = new Alert(patient.getPatientId(), "Too low systolic pressure", record.getTimestamp());
                     triggerAlert(tooLowSystolicAlert);
+
+                    // Saving parameters for Hypoxemia check.
+                    latestLowSystolic = systolicPressure;
+                    systolicTimestamp = record.getTimestamp();
                 }
             }
             
@@ -64,6 +73,14 @@ public class AlertGenerator {
                 if(diastolicPressure<60){
                     Alert tooLowDiastolicAlert = new Alert(patient.getPatientId(), "Too Low diastolic pressure", record.getTimestamp());
                     triggerAlert(tooLowDiastolicAlert);
+                }
+            }
+
+            if (record.getRecordType().equals("BloodOxygenSaturation")){
+                double oxygenSaturation = record.getMeasurementValue();
+                if(oxygenSaturation < 92){
+                    latestLowOxygen = oxygenSaturation;
+                    oxygenTimestamp = record.getTimestamp();
                 }
             }
             
@@ -85,7 +102,15 @@ public class AlertGenerator {
                 }
 
             }
-            
+            //Hypotensive Hypoxemia check
+            if(latestLowSystolic != null && latestLowOxygen != null){
+                long alertTime = Math.max(systolicTimestamp, oxygenTimestamp);
+                Alert hypoHypoxAlert = new Alert(patient.getPatientId(), "Hypotensive Hypoxemia", alertTime);
+                triggerAlert(hypoHypoxAlert);
+
+                latestLowOxygen = null;
+                latestLowSystolic = null;
+            }
                 
             
         }
