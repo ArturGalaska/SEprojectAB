@@ -79,7 +79,7 @@ public class AlertGenerator {
                     Alert decreasingTrendAlert = new Alert(patient.getPatientId(), "Consistent decrease in blood pressure occured", record3.getTimestamp());
                     triggerAlert(decreasingTrendAlert);
                 }
-                if((value3+10)>value2&&(value2+10)>value){
+                if((value3-10)>value2&&(value2-10)>value){
                     Alert increasingTrendAlert = new Alert(patient.getPatientId(), "Consistent increase in blood pressure occured", record3.getTimestamp());
                     triggerAlert(increasingTrendAlert);
                 }

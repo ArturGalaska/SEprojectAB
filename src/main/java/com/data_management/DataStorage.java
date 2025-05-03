@@ -90,7 +90,11 @@ public class DataStorage {
         DataStorage storage = new DataStorage();
         Patient patient1 = new Patient(1);
         storage.patientMap.put(1, patient1);
-        storage.addPatientData(1, 40, "DiastolicPressure", 1713703600000L);
+        storage.addPatientData(1, 60, "DiastolicPressure", 1713703600000L);
+        storage.addPatientData(1, 60, "DiastolicPressure", 1713703700000L);
+        storage.addPatientData(1, 80, "DiastolicPressure", 1713703800000L);
+        storage.addPatientData(1, 100, "DiastolicPressure", 1713703900000L);
+        
         // Assuming the reader has been properly initialized and can read data into the
         // storage
         // reader.readData(storage);
