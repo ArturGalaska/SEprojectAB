@@ -45,6 +45,11 @@ public class AlertGenerator {
         Long systolicTimestamp = null;
         Double latestLowOxygen = null;
         Long oxygenTimestamp = null;
+        BloodPressureChecker pressureChecker = new BloodPressureChecker();
+        BloodOxygenSaturationChecker saturationChecker = new BloodOxygenSaturationChecker(pressureChecker);
+
+        pressureChecker.check(patient, patientData, this);
+        saturationChecker.check(patient, patientData, this);
         }
     
 

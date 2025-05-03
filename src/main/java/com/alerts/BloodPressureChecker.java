@@ -9,6 +9,9 @@ public class BloodPressureChecker implements AlertChecker{
     
     private Double latestLowSystolic;
     private Long systolicTimestamp;
+
+    BloodPressureChecker(){
+    }
     @Override
     public void check(Patient patient, List<PatientRecord> patientData, AlertGenerator generator){
         for(int i=0;i<patientData.size();i++){
@@ -20,7 +23,6 @@ public class BloodPressureChecker implements AlertChecker{
                 }
                 if(systolicPressure<90){
                     generator.trigger(new Alert(patient.getPatientId(), "Too low systolic pressure", record.getTimestamp()));
-                    // Saving parameters for Hypoxemia check.
                     latestLowSystolic = systolicPressure;
                     systolicTimestamp = record.getTimestamp();
                 }
@@ -56,10 +58,10 @@ public class BloodPressureChecker implements AlertChecker{
             }
         }
     }
-    public double getLatestLowSystolic(){
+    public Double getLatestLowSystolic(){
         return latestLowSystolic;
     }
-    public long getSystolicTimeStamp(){
+    public Long getSystolicTimeStamp(){
         return systolicTimestamp;
     }
 }
