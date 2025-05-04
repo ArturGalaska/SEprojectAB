@@ -6,6 +6,7 @@ import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
+
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
  * and generating alerts when certain predefined conditions are met. This class
@@ -45,9 +46,13 @@ public class AlertGenerator {
         Long systolicTimestamp = null;
         Double latestLowOxygen = null;
         Long oxygenTimestamp = null;
+
+        HypotensiveHypoxemiaAlert hypoChecker = new HypotensiveHypoxemiaAlert();
         BloodPressureChecker pressureChecker = new BloodPressureChecker();
         BloodOxygenSaturationChecker saturationChecker = new BloodOxygenSaturationChecker(pressureChecker);
 
+        
+        hypoChecker.check(patient, patientData, this);
         pressureChecker.check(patient, patientData, this);
         saturationChecker.check(patient, patientData, this);
         }
