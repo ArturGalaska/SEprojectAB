@@ -15,3 +15,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.alerts.Alert;
+
+public class BloodOxygenSaturationCheckerTest{
+     @Test
+    
+
+     }
+}
