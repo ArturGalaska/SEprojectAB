@@ -2,16 +2,13 @@ package data_management;
 
 
 import com.alerts.Alert;
-import com.alerts.TriggeredAlertChecker;
 import com.alerts.AlertGenerator;
 
 
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
-
-
+import com.strategy.TriggeredAlertStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,8 +32,8 @@ public class TriggeredAlertCheckerTest{
 
         TestAlertGenerator generator = new TestAlertGenerator();
 
-        TriggeredAlertChecker checker = new TriggeredAlertChecker();
-        checker.check(patient, records, generator);
+        TriggeredAlertStrategy checker = new TriggeredAlertStrategy();
+        checker.checkAlert(patient, records, generator);
 
         List<Alert> alerts = generator.getAlerts();
         assertEquals(1, alerts.size());

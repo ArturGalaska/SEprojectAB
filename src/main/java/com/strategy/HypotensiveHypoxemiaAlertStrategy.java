@@ -1,14 +1,16 @@
-package com.alerts;
+package com.strategy;
 
 import java.util.List;
 
+import com.alerts.Alert;
+import com.alerts.AlertGenerator;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
-public class HypotensiveHypoxemiaAlert implements AlertChecker{
+public class HypotensiveHypoxemiaAlertStrategy implements AlertStrategy{
     
     @Override
-    public void check(Patient patient, List<PatientRecord> patientData, AlertGenerator generator) {
+    public void checkAlert(Patient patient, List<PatientRecord> patientData, AlertGenerator generator) {
         for(PatientRecord systolic : patientData) {
             if(!systolic.getRecordType().equalsIgnoreCase("SystolicPressure")) continue;
             if (systolic.getMeasurementValue() >= 90) continue;

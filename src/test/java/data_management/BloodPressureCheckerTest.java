@@ -1,13 +1,11 @@
 package data_management;
 
 
-import com.alerts.BloodPressureChecker;
-
 import com.alerts.AlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
+import com.strategy.BloodPressureStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,8 +26,8 @@ public class BloodPressureCheckerTest{
         List<PatientRecord> records = List.of(new PatientRecord(1, 85.0, "SystolicPressure", now));
 
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodPressureChecker checker = new BloodPressureChecker();
-        checker.check(patient, records, generator);
+        BloodPressureStrategy checker = new BloodPressureStrategy();
+        checker.checkAlert(patient, records, generator);
         assertEquals(1, generator.getAlerts().size());
         assertEquals("Too low systolic pressure",  generator.getAlerts().get(0).getCondition());
 
@@ -41,8 +39,8 @@ public class BloodPressureCheckerTest{
 
         List<PatientRecord> records = List.of(new PatientRecord(1, 150, "DiastolicPressure", now));
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodPressureChecker checker = new BloodPressureChecker();
-        checker.check(patient, records, generator);
+        BloodPressureStrategy checker = new BloodPressureStrategy();
+        checker.checkAlert(patient, records, generator);
 
         assertEquals(1, generator.getAlerts().size());
         assertEquals("Too high diastolic pressure",  generator.getAlerts().get(0).getCondition());
@@ -54,8 +52,8 @@ public class BloodPressureCheckerTest{
         List<PatientRecord> records = List.of(new PatientRecord(1, 100, "SystolicPressure", now),new PatientRecord(1, 111, "SystolicPressure", now+60000),new PatientRecord(1, 122, "SystolicPressure", now+120000));
         
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodPressureChecker checker = new BloodPressureChecker();
-        checker.check(patient, records, generator);
+        BloodPressureStrategy checker = new BloodPressureStrategy();
+        checker.checkAlert(patient, records, generator);
 
         assertEquals(1, generator.getAlerts().size());
         assertEquals("Consistent increase in blood pressure occured",  generator.getAlerts().get(0).getCondition());
@@ -70,8 +68,8 @@ public class BloodPressureCheckerTest{
         List<PatientRecord> records = List.of(new PatientRecord(1, 121, "SystolicPressure", now),new PatientRecord(1, 110, "SystolicPressure", now+60000),new PatientRecord(1, 99, "SystolicPressure", now+120000));
         
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodPressureChecker checker = new BloodPressureChecker();
-        checker.check(patient, records, generator);
+        BloodPressureStrategy checker = new BloodPressureStrategy();
+        checker.checkAlert(patient, records, generator);
 
         assertEquals(1, generator.getAlerts().size());
         assertEquals("Consistent decrease in blood pressure occured",  generator.getAlerts().get(0).getCondition());

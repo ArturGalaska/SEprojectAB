@@ -1,11 +1,12 @@
 package data_management;
 
-import com.alerts.HypotensiveHypoxemiaAlert;
+
 
 import com.alerts.AlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.strategy.HypotensiveHypoxemiaAlertStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,8 +36,8 @@ public class HypotensiveHypoxemiaAlertTest {
 
         TestAlertGenerator generator = new TestAlertGenerator();
 
-        HypotensiveHypoxemiaAlert checker = new HypotensiveHypoxemiaAlert();
-        checker.check(patient, data, generator);
+        HypotensiveHypoxemiaAlertStrategy checker = new HypotensiveHypoxemiaAlertStrategy();
+        checker.checkAlert(patient, data, generator);
 
         List<Alert> alerts = generator.getAlerts();
         assertEquals(1, alerts.size());

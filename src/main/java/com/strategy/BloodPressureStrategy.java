@@ -1,28 +1,33 @@
-package com.alerts;
+package com.strategy;
 
 import java.util.List;
 
+import com.alerts.AlertGenerator;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.factory.BloodPressureAlertFactory;
 
-public class BloodPressureChecker implements AlertChecker{
+public class BloodPressureStrategy implements AlertStrategy{
     
     private Double latestLowSystolic;
     private Long systolicTimestamp;
+    private BloodPressureAlertFactory factory = new BloodPressureAlertFactory(); 
 
-    public BloodPressureChecker(){
+    public BloodPressureStrategy(){
     }
     @Override
-    public void check(Patient patient, List<PatientRecord> patientData, AlertGenerator generator){
+    public void checkAlert(Patient patient, List<PatientRecord> patientData, AlertGenerator generator){
         for(int i=0;i<patientData.size();i++){
             PatientRecord record = patientData.get(i);
+            String patientId = patient.getPatientId();
+            long timeStamp = record.getTimestamp();
             if(record.getRecordType().equals("SystolicPressure")){
                 double systolicPressure = record.getMeasurementValue();
                 if(systolicPressure>180){
-                    generator.trigger(new Alert(patient.getPatientId(), "Too high systolic pressure", record.getTimestamp()));
+                    generator.trigger(factory.createAlert(patientId,"highsystolic",timeStamp));
                 }
                 if(systolicPressure<90){
-                    generator.trigger(new Alert(patient.getPatientId(), "Too low systolic pressure", record.getTimestamp()));
+                    generator.trigger(factory.createAlert(patientId, "lowsystolic", timeStamp));
                     latestLowSystolic = systolicPressure;
                     systolicTimestamp = record.getTimestamp();
                 }
@@ -30,10 +35,10 @@ public class BloodPressureChecker implements AlertChecker{
             if(record.getRecordType().equals("DiastolicPressure")){
                 double diastolicPressure = record.getMeasurementValue();
                 if(diastolicPressure>120){
-                    generator.trigger(new Alert(patient.getPatientId(), "Too high diastolic pressure", record.getTimestamp()));
+                    generator.trigger(factory.createAlert(patientId, "highdiastolic", timeStamp));
                 }
                 if(diastolicPressure<60){
-                    generator.trigger(new Alert(patient.getPatientId(), "Too Low diastolic pressure", record.getTimestamp()));
+                    generator.trigger(factory.createAlert(patientId, "lowdiastolic", timeStamp));
                 }
             }
             if(i<patientData.size()-2){
@@ -47,11 +52,11 @@ public class BloodPressureChecker implements AlertChecker{
                 String type3 = record3.getRecordType();
                 if(type.equals(type2)&&type.equals(type3)){
                     if((value3+10)<value2&&(value2+10)<value){
-                        generator.trigger(new Alert(patient.getPatientId(), "Consistent decrease in blood pressure occured", record3.getTimestamp()));
+                        generator.trigger(factory.createAlert(patientId, "decrease", timeStamp));
                         
                     }
                     if((value3-10)>value2&&(value2-10)>value){
-                        generator.trigger(new Alert(patient.getPatientId(), "Consistent increase in blood pressure occured", record3.getTimestamp()));
+                        generator.trigger(factory.createAlert(patientId, "increase", timeStamp));
                         
                     }
                 }

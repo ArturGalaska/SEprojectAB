@@ -5,7 +5,11 @@ import java.util.List;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
+import com.strategy.OxygenSaturationStrategy;
+import com.strategy.TriggeredAlertStrategy;
+import com.strategy.BloodPressureStrategy;
+import com.strategy.HeartRateStrategy;
+import com.strategy.HypotensiveHypoxemiaAlertStrategy;
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
@@ -41,21 +45,18 @@ public class AlertGenerator {
     public void evaluateData(Patient patient) {
         // Implementation goes here
         List<PatientRecord> patientData = patient.getRecords(1713700000000L, 1713707200000L);
+        BloodPressureStrategy pressureStrategy = new BloodPressureStrategy();
+        OxygenSaturationStrategy saturationStrategy = new OxygenSaturationStrategy(pressureStrategy);
+        HeartRateStrategy heartRateStrategy = new HeartRateStrategy();
+        HypotensiveHypoxemiaAlertStrategy hypoxemiaStrategy = new HypotensiveHypoxemiaAlertStrategy();
+        TriggeredAlertStrategy triggeredAlertStrategy = new TriggeredAlertStrategy();
         
-        Double latestLowSystolic = null;
-        Long systolicTimestamp = null;
-        Double latestLowOxygen = null;
-        Long oxygenTimestamp = null;
-
-        HypotensiveHypoxemiaAlert hypoChecker = new HypotensiveHypoxemiaAlert();
-        BloodPressureChecker pressureChecker = new BloodPressureChecker();
-        BloodOxygenSaturationChecker saturationChecker = new BloodOxygenSaturationChecker(pressureChecker);
-
-        
-        hypoChecker.check(patient, patientData, this);
-        pressureChecker.check(patient, patientData, this);
-        saturationChecker.check(patient, patientData, this);
-        }
+        pressureStrategy.checkAlert(patient, patientData, this);
+        saturationStrategy.checkAlert(patient, patientData, this);
+        heartRateStrategy.checkAlert(patient, patientData, this);
+        hypoxemiaStrategy.checkAlert(patient, patientData, this);
+        triggeredAlertStrategy.checkAlert(patient, patientData, this);
+    }
     
 
     /**

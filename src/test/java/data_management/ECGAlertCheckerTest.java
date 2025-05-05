@@ -2,12 +2,10 @@ package data_management;
 
 
 import com.alerts.AlertGenerator;
-import com.alerts.ECGAlertChecker;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
-
+import com.strategy.HeartRateStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,8 +35,8 @@ public class ECGAlertCheckerTest{
    
         TestAlertGenerator generator = new TestAlertGenerator();
 
-        ECGAlertChecker checker = new ECGAlertChecker();
-        checker.check(patient, data, generator);
+        HeartRateStrategy checker = new HeartRateStrategy();
+        checker.checkAlert(patient, data, generator);
         
 
         List<Alert> alerts = generator.getAlerts();

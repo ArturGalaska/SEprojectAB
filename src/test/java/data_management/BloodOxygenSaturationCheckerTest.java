@@ -2,12 +2,11 @@ package data_management;
 
 
 import com.alerts.AlertGenerator;
-import com.alerts.BloodOxygenSaturationChecker;
-import com.alerts.BloodPressureChecker;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
+import com.strategy.OxygenSaturationStrategy;
+import com.strategy.BloodPressureStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,8 +28,8 @@ public class BloodOxygenSaturationCheckerTest{
         records.add(new PatientRecord(1, 90, "BloodOxygenSaturation", now+100_000));
     
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodOxygenSaturationChecker checker = new BloodOxygenSaturationChecker(new BloodPressureChecker());
-        checker.check(patient, records, generator);
+        OxygenSaturationStrategy checker = new OxygenSaturationStrategy(new BloodPressureStrategy());
+        checker.checkAlert(patient, records, generator);
 
         List<Alert> alerts = generator.getAlerts();
         assertEquals(1, alerts.size());
@@ -50,8 +49,8 @@ public class BloodOxygenSaturationCheckerTest{
         records.add(new PatientRecord(1, 93, "BloodOxygenSaturation", now+100_000));
     
         TestAlertGenerator generator= new TestAlertGenerator();
-        BloodOxygenSaturationChecker checker = new BloodOxygenSaturationChecker(new BloodPressureChecker());
-        checker.check(patient, records, generator);
+        OxygenSaturationStrategy checker = new OxygenSaturationStrategy(new BloodPressureStrategy());
+        checker.checkAlert(patient, records, generator);
 
         assertEquals(0, generator.getAlerts().size());
     }
