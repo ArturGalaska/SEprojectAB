@@ -1,14 +1,13 @@
 package data_management;
 
-import com.alerts.HypotensiveHypoxemiaAlert;
+
 import com.alerts.BloodPressureChecker;
-import com.alerts.AlertChecker;
+
 import com.alerts.AlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
-import data_management.ECGAlertCheckerTest.TestAlertGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
