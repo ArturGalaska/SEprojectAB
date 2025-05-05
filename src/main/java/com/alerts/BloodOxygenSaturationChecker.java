@@ -28,12 +28,7 @@ public class BloodOxygenSaturationChecker implements AlertChecker{
                     latestLowOxygen = oxygenSaturation;
                     oxygenTimestamp = record.getTimestamp();
                 }
-                if(latestLowSystolic != null && latestLowOxygen != null && systolicTimestamp != null && oxygenTimestamp != null){
-                    long alertTime = Math.max(systolicTimestamp, oxygenTimestamp);
-                    generator.trigger(new Alert(patient.getPatientId(), "Hypotensive Hypoxemia", alertTime));
-                    latestLowOxygen = null;
-                    latestLowSystolic = null;
-                }
+                
                 for (int j = 0; j < i; j++) {
                     PatientRecord previousRecord = patientData.get(j);
                     if (previousRecord.getRecordType().equals("BloodOxygenSaturation")) {
