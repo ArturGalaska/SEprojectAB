@@ -10,7 +10,7 @@ public class BloodPressureChecker implements AlertChecker{
     private Double latestLowSystolic;
     private Long systolicTimestamp;
 
-    BloodPressureChecker(){
+    public BloodPressureChecker(){
     }
     @Override
     public void check(Patient patient, List<PatientRecord> patientData, AlertGenerator generator){
