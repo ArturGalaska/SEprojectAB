@@ -67,12 +67,12 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
-    private void triggerAlert(Alert alert) {
+    private void triggerAlert(GeneralAlert alert) {
         // Implementation might involve logging the alert or notifying staff
         String message = String.format("Patient ID: %s | Condition: %s | Time: %d", alert.getPatientId(),alert.getCondition(),alert.getTimestamp());
         System.out.println(message);
     }
-    public void trigger(Alert alert){
+    public void trigger(GeneralAlert alert){
         triggerAlert(alert);
     }
 }

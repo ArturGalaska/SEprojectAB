@@ -34,7 +34,11 @@ public class HealthDataSimulator {
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
+    private static HealthDataSimulator instance;
 
+    private HealthDataSimulator(){
+
+    }
 
 /**
  *Main function for the health data simulator.
@@ -56,6 +60,13 @@ public class HealthDataSimulator {
  * @param args
  * @throws IOException if file output directory cant be made.
  */
+    public static HealthDataSimulator getInstance(){
+        if(instance==null){
+            return new HealthDataSimulator();
+        }
+        return instance;
+    }
+     
     private static void parseArguments(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
