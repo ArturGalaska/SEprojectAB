@@ -2,10 +2,12 @@ package com.strategy;
 
 import java.util.List;
 
-import com.alerts.Alert;
+
 import com.alerts.AlertGenerator;
+import com.alerts.GeneralAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.decorator.Alert;
 
 public class HypotensiveHypoxemiaAlertStrategy implements AlertStrategy{
     
@@ -22,7 +24,7 @@ public class HypotensiveHypoxemiaAlertStrategy implements AlertStrategy{
                 if (Math.abs(oxygen.getTimestamp() - systolicTime) > 60_000) continue; // in 1 min
                 if (oxygen.getMeasurementValue() >= 92) continue;
 
-                Alert alert = new Alert(patient.getPatientId(), "Hypotensive Hypoxemia", Math.max(systolicTime, oxygen.getTimestamp()));
+                Alert alert = new GeneralAlert(patient.getPatientId(), "Hypotensive Hypoxemia", Math.max(systolicTime, oxygen.getTimestamp()));
 
                 generator.trigger(alert);
 

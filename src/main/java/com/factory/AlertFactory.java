@@ -1,6 +1,8 @@
 package com.factory;
 
-import com.alerts.Alert;
+
+import com.alerts.GeneralAlert;
+import com.decorator.Alert;
 
 public interface AlertFactory {
     

@@ -2,7 +2,7 @@ package com.alerts;
 
 import com.decorator.Alert;
 
-// Represents an alert
+
 public class GeneralAlert  implements Alert {
     private String patientId;
     private String condition;
@@ -13,18 +13,19 @@ public class GeneralAlert  implements Alert {
         this.condition = condition;
         this.timestamp = timestamp;
     }
-
+    @Override
     public String getPatientId() {
         return patientId;
     }
-
+    @Override
     public String getCondition() {
         return condition;
     }
-
+    @Override
     public long getTimestamp() {
         return timestamp;
     }
+    @Override
     public void sendAlert(){
         System.out.println("Record for Patient ID: " +patientId +
                     ", Condition: " + condition +

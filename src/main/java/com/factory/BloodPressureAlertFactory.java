@@ -1,23 +1,24 @@
 package com.factory;
 
-import com.alerts.Alert;
+import com.alerts.GeneralAlert;
+import com.decorator.Alert;
 
 public class BloodPressureAlertFactory implements AlertFactory{
     @Override
     public Alert createAlert(String patientId, String condition, long timestamp){
         switch (condition){
             case "highdiastolic":
-                return new Alert(patientId, "Too high diastolic pressure", timestamp);
+                return new GeneralAlert(patientId, "Too high diastolic pressure", timestamp);
             case "lowdiastolic":
-                return new Alert(patientId,"Too low diastolic pressure" , timestamp);
+                return new GeneralAlert(patientId,"Too low diastolic pressure" , timestamp);
             case "highsystolic":
-                return new Alert(patientId,"Too high systolic pressure" , timestamp);
+                return new GeneralAlert(patientId,"Too high systolic pressure" , timestamp);
             case "lowsystolic":
-                return new Alert(patientId, "Too low systolic pressure", timestamp);
+                return new GeneralAlert(patientId, "Too low systolic pressure", timestamp);
             case "decrease":
-                return new Alert(patientId, "Consistent decrease in blood pressure occured", timestamp);
+                return new GeneralAlert(patientId, "Consistent decrease in blood pressure occured", timestamp);
             case "increase":
-                return new Alert(patientId, "Consistent increase in blood pressure occured", timestamp);
+                return new GeneralAlert(patientId, "Consistent increase in blood pressure occured", timestamp);
             default:
             throw new IllegalArgumentException("Unknown condition: "+ condition);
         }

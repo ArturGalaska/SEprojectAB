@@ -2,7 +2,7 @@ package com.strategy;
 
 import java.util.List;
 
-import com.alerts.Alert;
+import com.alerts.GeneralAlert;
 import com.alerts.AlertGenerator;
 import com.cardio_generator.HealthDataSimulator;
 import com.data_management.Patient;
@@ -23,7 +23,7 @@ public class TriggeredAlertStrategy implements AlertStrategy {
             PatientRecord record = patientData.get(i);
             if(record.getRecordType().equals("Alert")){
                 buttonPressed=true;
-                generator.trigger(new Alert(patient.getPatientId(), "Alert, button was triggered.", record.getTimestamp()));
+                generator.trigger(new GeneralAlert(patient.getPatientId(), "Alert, button was triggered.", record.getTimestamp()));
             }
         }
     }

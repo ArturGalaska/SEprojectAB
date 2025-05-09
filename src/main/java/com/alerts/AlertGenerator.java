@@ -5,6 +5,7 @@ import java.util.List;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.decorator.Alert;
 import com.strategy.OxygenSaturationStrategy;
 import com.strategy.TriggeredAlertStrategy;
 import com.strategy.BloodPressureStrategy;
@@ -67,12 +68,12 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
-    private void triggerAlert(GeneralAlert alert) {
+    private void triggerAlert(Alert alert) {
         // Implementation might involve logging the alert or notifying staff
         String message = String.format("Patient ID: %s | Condition: %s | Time: %d", alert.getPatientId(),alert.getCondition(),alert.getTimestamp());
         System.out.println(message);
     }
-    public void trigger(GeneralAlert alert){
+    public void trigger(Alert alert){
         triggerAlert(alert);
     }
 }
