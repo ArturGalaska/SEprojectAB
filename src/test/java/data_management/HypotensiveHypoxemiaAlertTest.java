@@ -6,6 +6,7 @@ import com.alerts.AlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.decorator.Alert;
 import com.strategy.HypotensiveHypoxemiaAlertStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.alerts.Alert;
+
 
 public class HypotensiveHypoxemiaAlertTest {
 
@@ -48,7 +49,7 @@ public class HypotensiveHypoxemiaAlertTest {
         static class TestAlertGenerator extends AlertGenerator {
             private final List<Alert> alerts = new ArrayList<>();
             public TestAlertGenerator() {
-                super(new DataStorage());
+                super(DataStorage.getInstance());
             }
             @Override
             public void trigger(Alert alert) {

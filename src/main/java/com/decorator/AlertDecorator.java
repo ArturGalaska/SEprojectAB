@@ -1,7 +1,7 @@
 package com.decorator;
 
 public class AlertDecorator implements Alert{
-    protected final Alert decoratedAlert;
+    final Alert decoratedAlert;
 
     public AlertDecorator(Alert decoratedAlert) {
         this.decoratedAlert = decoratedAlert;
@@ -23,7 +23,7 @@ public class AlertDecorator implements Alert{
     }
 
     @Override
-    public void sendAlert() {
-        decoratedAlert.sendAlert();
+    public void createAlert() {
+        decoratedAlert.createAlert();
     }
 }

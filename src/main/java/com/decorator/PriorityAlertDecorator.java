@@ -5,15 +5,20 @@ public class PriorityAlertDecorator extends AlertDecorator {
     public PriorityAlertDecorator(Alert decoratedAlert) {
         super(decoratedAlert);
         setPriority(decoratedAlert);
+        createAlert();
     }
     @Override
-    public void sendAlert(){
-        if(this.priority.equals("HIGH"))
-            System.out.println("Alert priority: "+this.priority);
-        decoratedAlert.sendAlert();
+    public void createAlert(){
+        if(this.priority!=null&&this.priority.equals("HIGH")){
+            System.out.print("Alert priority: "+this.priority+" |  ");
+        }else{
+            return;
+        }
     }
     public void setPriority(Alert alert){
-        if(alert.getCondition().equals("increase")||alert.getCondition().equals("decrease")){
+        if(alert.getCondition().equals(
+            "Consistent increase in blood pressure occured")||alert.getCondition().equals(
+                "Consistent decrease in blood pressure occured")){
             this.priority="HIGH";
         }
     }

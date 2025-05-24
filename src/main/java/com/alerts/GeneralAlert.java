@@ -26,7 +26,7 @@ public class GeneralAlert  implements Alert {
         return timestamp;
     }
     @Override
-    public void sendAlert(){
+    public void createAlert(){
         System.out.println("Record for Patient ID: " +patientId +
                     ", Condition: " + condition +
                     ", Timestamp: " + timestamp);

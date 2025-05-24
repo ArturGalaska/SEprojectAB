@@ -5,6 +5,8 @@ import java.util.List;
 import com.alerts.AlertGenerator;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
+import com.decorator.Alert;
+import com.decorator.Alert;
 import com.factory.BloodPressureAlertFactory;
 
 public class BloodPressureStrategy implements AlertStrategy{
@@ -17,6 +19,7 @@ public class BloodPressureStrategy implements AlertStrategy{
     }
     @Override
     public void checkAlert(Patient patient, List<PatientRecord> patientData, AlertGenerator generator){
+        Alert alert;
         for(int i=0;i<patientData.size();i++){
             PatientRecord record = patientData.get(i);
             String patientId = patient.getPatientId();
@@ -24,10 +27,10 @@ public class BloodPressureStrategy implements AlertStrategy{
             if(record.getRecordType().equals("SystolicPressure")){
                 double systolicPressure = record.getMeasurementValue();
                 if(systolicPressure>180){
-                    generator.trigger(factory.createAlert(patientId,"highsystolic",timeStamp));
+                    generator.trigger(alert=factory.createAlert(patientId,"highsystolic",timeStamp));
                 }
                 if(systolicPressure<90){
-                    generator.trigger(factory.createAlert(patientId, "lowsystolic", timeStamp));
+                    generator.trigger(alert=factory.createAlert(patientId, "lowsystolic", timeStamp));
                     latestLowSystolic = systolicPressure;
                     systolicTimestamp = record.getTimestamp();
                 }
@@ -35,10 +38,10 @@ public class BloodPressureStrategy implements AlertStrategy{
             if(record.getRecordType().equals("DiastolicPressure")){
                 double diastolicPressure = record.getMeasurementValue();
                 if(diastolicPressure>120){
-                    generator.trigger(factory.createAlert(patientId, "highdiastolic", timeStamp));
+                    generator.trigger(alert=factory.createAlert(patientId, "highdiastolic", timeStamp));
                 }
                 if(diastolicPressure<60){
-                    generator.trigger(factory.createAlert(patientId, "lowdiastolic", timeStamp));
+                    generator.trigger(alert=factory.createAlert(patientId, "lowdiastolic", timeStamp));
                 }
             }
             if(i<patientData.size()-2){
@@ -52,12 +55,12 @@ public class BloodPressureStrategy implements AlertStrategy{
                 String type3 = record3.getRecordType();
                 if(type.equals(type2)&&type.equals(type3)){
                     if((value3+10)<value2&&(value2+10)<value){
-                        generator.trigger(factory.createAlert(patientId, "decrease", timeStamp));
-                        
+                        generator.trigger(alert=factory.createAlert(patientId, "decrease", timeStamp));
+                        alert.createAlert();
                     }
                     if((value3-10)>value2&&(value2-10)>value){
-                        generator.trigger(factory.createAlert(patientId, "increase", timeStamp));
-                        
+                        generator.trigger(alert=factory.createAlert(patientId, "increase", timeStamp));
+                        alert.createAlert();
                     }
                 }
             }

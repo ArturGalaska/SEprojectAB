@@ -2,25 +2,38 @@ package com.factory;
 
 import com.alerts.GeneralAlert;
 import com.decorator.Alert;
+import com.decorator.AlertDecorator;
+import com.decorator.PriorityAlertDecorator;
 
 public class BloodPressureAlertFactory implements AlertFactory{
     @Override
     public Alert createAlert(String patientId, String condition, long timestamp){
+        Alert alert;
         switch (condition){
             case "highdiastolic":
-                return new GeneralAlert(patientId, "Too high diastolic pressure", timestamp);
+                alert =new GeneralAlert(patientId, "Too high diastolic pressure", timestamp);
+                break;
             case "lowdiastolic":
-                return new GeneralAlert(patientId,"Too low diastolic pressure" , timestamp);
+                alert = new GeneralAlert(patientId,"Too low diastolic pressure" , timestamp);
+                break;
             case "highsystolic":
-                return new GeneralAlert(patientId,"Too high systolic pressure" , timestamp);
+                alert = new GeneralAlert(patientId,"Too high systolic pressure" , timestamp);
+                break;
             case "lowsystolic":
-                return new GeneralAlert(patientId, "Too low systolic pressure", timestamp);
+                alert = new GeneralAlert(patientId, "Too low systolic pressure", timestamp);
+                break;
             case "decrease":
-                return new GeneralAlert(patientId, "Consistent decrease in blood pressure occured", timestamp);
+                alert = new GeneralAlert(patientId, "Consistent decrease in blood pressure occured", timestamp);
+                break;
             case "increase":
-                return new GeneralAlert(patientId, "Consistent increase in blood pressure occured", timestamp);
+                alert = new GeneralAlert(patientId, "Consistent increase in blood pressure occured", timestamp);
+                break;
             default:
             throw new IllegalArgumentException("Unknown condition: "+ condition);
         }
+        AlertDecorator decoratedAlert = new PriorityAlertDecorator(alert);
+        
+
+        return decoratedAlert;
     }
 }
