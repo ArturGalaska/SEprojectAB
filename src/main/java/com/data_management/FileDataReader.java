@@ -4,17 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileDataReader implements DataReader{
-    private String filePath;
-    public FileDataReader(String filePath){
-        this.filePath=filePath;
+public class FileDataReader implements DataReader {
+    private final String filePath;
+
+    public FileDataReader(String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
-    public void readData(DataStorage dataStorage) throws IOException{
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+    public void startReading(DataStorage dataStorage) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
 
                 int patientId = Integer.parseInt(parts[0].split(":")[1].trim());
@@ -24,6 +25,8 @@ public class FileDataReader implements DataReader{
 
                 dataStorage.addPatientData(patientId, measurementValue, recordType, timeStamp);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

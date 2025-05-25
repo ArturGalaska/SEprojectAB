@@ -17,8 +17,7 @@ public class WebSocketOutputStrategy implements OutputStrategy {
 
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
-        String message = String.format("%d,%d,%s,%s", patientId, timestamp, label, data);
-        // Broadcast the message to all connected clients
+        String message = String.format("id:%d,time:%d,type:%s,value:%s", patientId, timestamp, label, data);
         for (WebSocket conn : server.getConnections()) {
             conn.send(message);
         }

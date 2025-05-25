@@ -41,7 +41,7 @@ public class DataStorage {
 
     public static DataStorage getInstance(){
         if(instance==null){
-            return new DataStorage();
+            instance = new DataStorage();
         }
         return instance;
     }
@@ -96,7 +96,7 @@ public class DataStorage {
     public static void main(String[] args) {
         // DataReader is not defined in this scope, should be initialized appropriately.
         // DataReader reader = new SomeDataReaderImplementation("path/to/data");
-        DataStorage storage = new DataStorage();
+        DataStorage storage = DataStorage.getInstance();
         Patient patient1 = new Patient(1);
         storage.patientMap.put(1, patient1);
         storage.addPatientData(1, 60, "DiastolicPressure", 1713703600000L);
@@ -107,6 +107,17 @@ public class DataStorage {
         // Assuming the reader has been properly initialized and can read data into the
         // storage
         // reader.readData(storage);
+        WebSocketDataReader reader = new WebSocketDataReader();
+        reader.startReading(storage);
+        System.out.println("WebSocket client is running. Press Ctrl+C to stop.");
+        try {
+        Thread.sleep(Long.MAX_VALUE);  
+            } catch (InterruptedException e) {
+        System.out.println("Interrupted, stopping...");
+            }
+
+    // Optionally, stop the reader gracefully if needed
+    reader.stopReading();
 
         // Example of using DataStorage to retrieve and print records for a patient
         List<PatientRecord> records = storage.getRecords(1, 1700000000000L, 1800000000000L);
