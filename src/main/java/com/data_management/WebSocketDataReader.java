@@ -11,13 +11,16 @@ public class WebSocketDataReader implements DataReader {
     @Override
     public void startReading(DataStorage dataStorage) {
         try {
+            //Creating a new websocket client instance with a target URI
             client = new WebSocketClient(new URI("ws://localhost:8080")) {
                 @Override
+                //method is called whenever the websocket connection is opened
                 public void onOpen(ServerHandshake handshakedata) {
                     System.out.println("Connected to WebSocket server.");
                 }
 
                 @Override
+                //Parse and store the incoming websocket messages that contain patient data.
                 public void onMessage(String message) {
                     try {
                         String[] parts = message.split(",");
@@ -33,18 +36,20 @@ public class WebSocketDataReader implements DataReader {
                 }
 
                 @Override
+                //method called when the connection is closed
                 public void onClose(int code, String reason, boolean remote) {
                     System.out.println("WebSocket closed: " + reason);
                 }
 
                 @Override
+                //method called when there's an error in the connection
                 public void onError(Exception ex) {
                     System.err.println("WebSocket error: " + ex.getMessage());
                 }
             };
 
+            //connecting to the websocket server
             client.connect();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
